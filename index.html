@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Máquina de Clientes para Empresas de Refrigeração em São Luís</title>
+  <meta name="description" content="Sua empresa de refrigeração em São Luís perde contratos todos os dias para concorrentes que aparecem primeiro no Google. Pare o sangramento." />
+  <style>
+    /* RESET CRÍTICO PARA RESPONSIVIDADE AUTOMÁTICA */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      max-width: 100%; /* Garante que nada passe da largura da tela do celular */
+    }
+
+    :root {
+      --bg: #080B0F;
+      --bg2: #111518;
+      --bg3: #181D22;
+      --white: #F0F4F8;
+      --muted: #8A9BAB;
+      --accent: #00BFFF;
+      --accent-glow: rgba(0, 191, 255, 0.18);
+      --green: #25D366;
+      --green-dark: #1EAB52;
+      --danger: #FF4D4D;
+      --border: rgba(255,255,255,0.07);
+      --radius: 14px;
+      --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 16px; /* Ajustado para melhor leitura no celular */
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* Evita vazamentos laterais */
+    }
+
+    /* CONTAINER FLUIDO - SE ADAPTA EM QUALQUER TELA */
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 16px; /* Margem interna padrão para telas menores */
+    }
+
+    .accent { color: var(--accent); }
+    .muted  { color: var(--muted); }
+    .bold   { font-weight: 700; }
+    .danger { color: var(--danger); font-weight: 700; }
+
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .topbar strong { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 48px 16px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0,191,255,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(255, 77, 77, 0.1);
+      border: 1px solid rgba(255, 77, 77, 0.3);
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    /* FONTES INTELIGENTES: SE AJUSTAM SOZINHAS CONFORME O VISOR */
+    .hero h1 {
+      font-size: clamp(24px, 6.5vw, 40px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(14px, 3.8vw, 17px);
+      color: var(--white);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
+
+    .filter-alert {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      text-align: left;
+    }
+
+    .thermo-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .thermo-track {
+      width: 140px;
+      height: 6px;
+      background: var(--bg3);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .thermo-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #FF4D4D, #25D366);
+      border-radius: 100px;
+      animation: thermofill 2.2s ease-out 0.4s forwards;
+    }
+    @keyframes thermofill {
+      to { width: 90%; }
+    }
+
+    /* ─── CTA BUTTON RESPONSIVO ─── */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--green);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 18px 24px;
+      width: 100%; /* Ocupa toda a largura disponível no celular para facilitar o clique */
+      max-width: 480px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 0 32px rgba(37, 211, 102, 0.3);
+      line-height: 1.2;
+      text-align: center;
+    }
+    .btn-cta:hover { background: var(--green-dark); }
+    .btn-cta svg { flex-shrink: 0; }
+
+    .cta-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 16px;
+    }
+
+    /* ─── SEÇÕES GENÉRICAS ─── */
+    .section { padding: 48px 16px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--danger);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(22px, 5.5vw, 30px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .section-body {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ─── BLOCOS DE DOR (FLEXÍVEIS E EMPILHÁVEIS) ─── */
+    .pain { background: var(--bg2); }
+    .pain-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .pain-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .pain-icon {
+      font-size: 20px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .pain-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--white);
+    }
+    .pain-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ─── PASSOS DA SOLUÇÃO ─── */
+    .solution-visual {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 20px;
+    }
+    .solution-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .solution-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .solution-step:first-child { padding-top: 0; }
+    .step-num {
+      width: 26px;
+      height: 26px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0,191,255,0.3);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .step-text p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ─── BENEFÍCIOS ─── */
+    .benefits { background: var(--bg2); }
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .benefit-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .benefit-check {
+      color: var(--green);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .benefit-text {
+      font-size: 15px;
+      color: var(--white);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .benefit-text span { color: var(--muted); font-size: 13px; display: block; margin-top: 4px; font-weight: 400; }
+
+    /* ─── DOIS QUADROS LADO A LADO QUE SE EMPILHAM NO CELULAR ─── */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    @media (max-width: 480px) {
+      .trust-grid { grid-template-columns: 1fr; } /* Fica um embaixo do outro em telas muito pequenas */
+    }
+    .trust-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .trust-number {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .trust-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* ─── SLIDER DE DEPOIMENTOS DE ALTA LEGIBILIDADE ─── */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      margin-top: 20px;
+      min-height: 240px;
+    }
+    .testimonial-slide {
+      display: none;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .testimonial-slide.active {
+      display: flex;
+      animation: slideFade 0.4s ease-in-out;
+    }
+    @keyframes slideFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .slider-dot.active {
+      background: var(--accent);
+      width: 20px;
+      border-radius: 4px;
+    }
+
+    /* ─── PREÇO ─── */
+    .price-block { background: var(--bg2); }
+    .price-card {
+      background: var(--bg3);
+      border: 1px solid rgba(0,191,255,0.3);
+      border-radius: 18px;
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+    }
+    .price-badge {
+      display: inline-block;
+      background: rgba(0,191,255,0.12);
+      border: 1px solid rgba(0,191,255,0.3);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+    .price-amount {
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .price-amount sup {
+      font-size: 22px;
+      font-weight: 700;
+      vertical-align: super;
+    }
+    .price-desc {
+      font-size: 14px;
+      color: var(--white);
+      margin-top: 6px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .price-includes {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .price-includes li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .price-includes li:last-child { border-bottom: none; }
+    .price-includes li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    /* ─── CTA FINAL ─── */
+    .cta-final {
+      text-align: center;
+      padding: 56px 16px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-final h2 {
+      font-size: clamp(22px, 5.5vw, 30px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .cta-final p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* ─── STICKY CTA BOTTOM MOBILE ─── */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(8, 11, 15, 0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      padding: 10px 16px;
+      z-index: 100;
+      display: none;
+    }
+    .sticky-cta .btn-cta { width: 100%; padding: 14px; border-radius: 8px; font-size: 15px; }
+    @media (max-width: 720px) {
+      .sticky-cta { display: block; }
+      .cta-final { padding-bottom: 90px; }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 24px 16px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  ⚠️ Alerta: Apenas <strong>1 vaga disponível</strong> para empresa de Refrigeração em São Luís esta semana.
+</div>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Aviso para Donos de Empresa de Refrigeração</div>
+    <h1>
+      Sua empresa de ar-condicionado está <em>invisível no Google</em> de São Luís. Seus concorrentes estão ficando com todos os contratos.
+    </h1>
+    
+    <p class="hero-sub">
+      Se a sua agenda depende de indicação ou do acaso, seu negócio está correndo risco. Nossa equipe de 2 especialistas cria sua estrutura de vendas ativa e entrega tudo pronto em no máximo 48 horas para colocar pedidos direto no seu WhatsApp.
+    </p>
+
+    <div class="filter-alert">
+      📌 <strong>LEIA ANTES DE CLICAR:</strong> Esse sistema comercial custa <strong>R$697 (pagamento único)</strong>. Somos uma equipe de dois profissionais focados, não trabalhamos de graça e não atendemos curiosos, autônomos sem estrutura ou pessoas procurando emprego. Se você não tem orçamento para investir ou não aguenta atender novas ordens de serviço, feche a página.
+    </div>
+
+    <div class="thermo-bar">
+      <span>Telefone mudo</span>
+      <div class="thermo-track">
+        <div class="thermo-fill"></div>
+      </div>
+      <span>WhatsApp apitando com pedido</span>
+    </div>
+
+    <a href="https://wa.me/5598985662704?text=Tenho+uma+empresa+de+refrigera%C3%A7%C3%A3o+em+S%C3%A3o+Lu%C3%ADs+e+quero+ativar+o+sistema+de+clientes." target="_blank" rel="noopener" class="btn-cta">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.115.549 4.103 1.509 5.836L.057 23.854a.5.5 0 0 0 .608.61l6.249-1.64A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.652-.502-5.176-1.381l-.371-.217-3.863 1.014.975-3.76-.234-.386A9.927 9.927 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      QUERO ATIVAR O MEU SISTEMA DE CLIENTES EM 48H
+    </a>
+    <div class="cta-note">Apenas para quem tem capacidade de atender novos clientes imediatamente.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section pain fade-in">
+  <div class="container">
+    <div class="section-label">A Realidade do Mercado</div>
+    <h2 class="section-title">Sua empresa sobrevive de restos ou domina a região?</h2>
+    <p class="section-body">Se você não está na primeira página do Google em São Luís, você está voluntariamente dando dinheiro para os seus concorrentes.</p>
+
+    <div class="pain-cards">
+      <div class="pain-card">
+        <div class="pain-icon">📉</div>
+        <div>
+          <h3>Você virou refém da indicação de terceiros</h3>
+          <p>Quando o movimento cai ou o telefone não toca, você não tem controle. Ficar esperando o cliente lembrar de você é a receita perfeita para quebrar o caixa.</p>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔍</div>
+        <div>
+          <h3>Empresas piores que a sua estão pegando os melhores contratos</h3>
+          <p>Enquanto seus técnicos ficam parados na oficina, empresas amadoras fecham instalações comerciais em bairros nobres e condomínios fechados porque aparecem primeiro no celular do cliente.</p>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <div>
+          <h3>Guerra por preço e leilão de orçamento</h3>
+          <p>Como você não tem volume de leads chegando, aceita negociar com cliente que chora por R$20 de desconto na higienização. Você precisa de clientes que pagam o preço justo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section fade-in">
+  <div class="container">
+    <div class="section-label">O Antídoto</div>
+    <h2 class="section-title">Uma máquina de vendas que caça clientes enquanto você está no campo</h2>
+    <p class="section-body">Não criamos sites institucionais decorativos. Construímos uma armadilha de conversão direta ligada ao Google para interceptar o cliente no exato momento da necessidade.</p>
+
+    <div class="solution-visual">
+      <div class="solution-step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>Interceptação Urgente</h4>
+          <p>O cliente de São Luís digita "conserto de ar condicionado urgente" ou "empresa de PMOC" e encontra sua empresa no topo.</p>
+        </div>
+      </div>
+      <div class="solution-step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>Página de Resposta Direta</h4>
+          <p>Sem firulas, sem textos longos. O cliente bate o olho, vê que sua empresa é séria, autorizada e profissional. O desejo de contratar é imediato.</p>
+        </div>
+      </div>
+      <div class="solution-step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>Disparo no WhatsApp</h4>
+          <p>Ele clica no único botão disponível. O WhatsApp da sua empresa abre com uma mensagem padrão solicitando orçamento estruturado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section benefits fade-in">
+  <div class="container">
+    <div class="section-label">O que está incluso no sistema</div>
+    <h2 class="section-title">Engenharia de conversão sem enrolação corporativa</h2>
+
+    <div class="benefits-list">
+      <div class="benefit-item">
+        <div class="benefit-check">✓</div>
+        <div class="benefit-text">
+          Sua Estrutura Pronta em no Máximo 48 Horas
+          <span>Sem burocracia ou atrasos. Nossa equipe de 2 especialistas foca com exclusividade total no seu projeto para entregar tudo rodando rápido.</span>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check">✓</div>
+        <div class="benefit-text">
+          Direito a Alterações Livres por 7 Dias
+          <span>Após a entrega rápida, você tem 7 dias inteiros para testar e pedir para mudar absolutamente o que você quiser na página, sem pagar nada a mais.</span>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check">✓</div>
+        <div class="benefit-text">
+          Otimização Mobile-First Extrema
+          <span>A página carrega em menos de 1.5 segundos no 4G da cidade. Velocidade máxima para garantir que você não perca nenhum clique pago.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section fade-in">
+  <div class="container">
+    <div class="section-label">Por que confiar</div>
+    <h2 class="section-title">Foco absoluto em trazer dinheiro para o seu caixa</h2>
+    <p class="section-body">Trabalhamos exclusivamente com páginas de serviço de alta conversão. Conhecemos a mentalidade do cliente de refrigeração e o que faz ele clicar e comprar.</p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-number">48h</div>
+        <div class="trust-label">prazo máximo de entrega no ar</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-number">100%</div>
+        <div class="trust-label">focado em gerar pedidos pelo WhatsApp</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-number">2</div>
+        <div class="trust-label">especialistas dedicados ao seu projeto</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-number">7 dias</div>
+        <div class="trust-label">de alterações livres pós-entrega</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section fade-in" style="background: var(--bg2);">
+  <div class="container">
+    <div class="section-label">Histórias de Sucesso</div>
+    <h2 class="section-title">O impacto real no caixa de quem ativou o sistema</h2>
+    <p class="section-body">Donos de empresas de refrigeração e climatização que cansaram de depender da sorte.</p>
+
+    <div class="slider-container">
+      <div class="testimonial-slide active">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span style="font-size: 13px; font-weight: 800; color: var(--green);">📊 CONTRATO FECHADO</span>
+          <span style="font-size: 12px; color: var(--muted);">Via WhatsApp</span>
+        </div>
+        <p style="font-size: 15px; color: var(--white); font-style: italic; line-height: 1.5;">
+          "Rapaz, eu confesso que meu negócio era muito amador no digital. A gente passava a semana inteira dependendo de indicação e quando saía serviço, era só contrato pequeno ou cliente chorando preço por higienização básica. Depois que o sistema ficou pronto, a coisa mudou de figura. Entrou um cliente grande procurando contrato de PMOC para uma clínica médica inteira. Só esse contrato pagou o investimento da página logo de cara. Hoje o WhatsApp não para e os técnicos estão na rua todo dia."
+        </p>
+        <div>
+          <strong style="font-size: 14px; color: var(--white); display: block;">Marcos S.</strong>
+          <span style="font-size: 13px; color: var(--muted);">Diretor Comercial (MasterFrio Climatização)</span>
+        </div>
+      </div>
+
+      <div class="testimonial-slide">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span style="font-size: 13px; font-weight: 800; color: var(--green);">🔥 AGENDA LOTADA</span>
+          <span style="font-size: 12px; color: var(--muted);">Via Google Meu Negócio</span>
+        </div>
+        <p style="font-size: 15px; color: var(--white); font-style: italic; line-height: 1.5;">
+          "Quem trabalha com refrigeração sabe que a demanda existe, mas o cliente nem sempre vem pra gente. Eu via os concorrentes rodando com equipes novas e a minha empresa antiga travada. O pessoal organizou nossa presença e botou a Landing Page no ar. Parece que ligaram uma chave. Teve dia de entrar 8 chamadas de instalação de uma vez. Minha agenda lotou tanto que tive que contratar mais duas duplas de mecânicos para dar conta do campo. O investimento voltou rápido."
+        </p>
+        <div>
+          <strong style="font-size: 14px; color: var(--white); display: block;">Valdir A.</strong>
+          <span style="font-size: 13px; color: var(--muted);">Fundador da RefriMaranhão</span>
+        </div>
+      </div>
+
+      <div class="testimonial-slide">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span style="font-size: 13px; font-weight: 800; color: var(--green);">💰 CLIENTE QUALIFICADO</span>
+          <span style="font-size: 12px; color: var(--muted);">Filtro Ativo</span>
+        </div>
+        <p style="font-size: 15px; color: var(--white); font-style: italic; line-height: 1.5;">
+          "O meu maior problema era que o cliente ligava já chorando preço amador de quem trabalha sem CNPJ. A página que eles criaram passa tanta autoridade que o cliente já vem pronto. Ele entra no WhatsApp sabendo que somos empresa séria. Fechamos 3 instalações de cassete de grande porte para um restaurante movimentado semana passada sem o dono questionar um centavo do orçamento. Se eu soubesse disso antes, não tinha passado tanto tempo sofrendo."
+        </p>
+        <div>
+          <strong style="font-size: 14px; color: var(--white); display: block;">Edmilson S.</strong>
+          <span style="font-size: 13px; color: var(--muted);">Sócio-Fundador (TecnoAr Serviços)</span>
+        </div>
+      </div>
+
+      <div class="testimonial-slide">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span style="font-size: 13px; font-weight: 800; color: #FF6B35;">🤨 ERA CÉTICO</span>
+          <span style="font-size: 12px; color: var(--muted);">Superou quebra de expectativa antiga</span>
+        </div>
+        <p style="font-size: 15px; color: var(--white); font-style: italic; line-height: 1.5;">
+          "Olha, eu já tinha perdido quase 3 mil reais com um rapaz de agência que fez um site todo enfeitado e pesado que não me trouxe um cliente sequer. Quando vi o anúncio desse sistema por R$ 697, achei que era só conversa fiada pra pegar meu dinheiro. Demorei uns 15 dias pra fechar. Mas a diferença é brutal: a página deles é direta ao ponto. Em menos de 48 horas com o anúncio rodando, entrou o primeiro pedido de conserto de uma câmara fria de um supermercado grande. Recuperei meu dinheiro na hora."
+        </p>
+        <div>
+          <strong style="font-size: 14px; color: var(--white); display: block;">Roberto F.</strong>
+          <span style="font-size: 13px; color: var(--muted);">Técnico Responsável (RN Refrigeração)</span>
+        </div>
+      </div>
+
+      <div class="testimonial-slide">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span style="font-size: 13px; font-weight: 800; color: #FF6B35;">👴 VELHA GUARDA</span>
+          <span style="font-size: 12px; color: var(--muted);">Quebrou o preconceito</span>
+        </div>
+        <p style="font-size: 15px; color: var(--white); font-style: italic; line-height: 1.5;">
+          "Eu sou da velha guarda, tenho 18 anos de praça e sempre achei que esse negócio de internet era bobeira, que o que funcionava era a indicação boca a boca. Mas a indicação começou a secar e o caixa apertou. Meu filho me convenceu a fazer a página. Eu não acreditava muito que alguém ia procurar manutenção séria no Google e fechar pelo WhatsApp sem me conhecer. Pois quebrei a cara. O cliente quer quem aparece primeiro resolvendo o problema dele. A página salvou meu ano."
+        </p>
+        <div>
+          <strong style="font-size: 14px; color: var(--white); display: block;">Jorge M.</strong>
+          <span style="font-size: 13px; color: var(--muted);">Gestor Comercial (Mendes Refrigeração)</span>
+        </div>
+      </div>
+
+      <div class="testimonial-slide">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span style="font-size: 13px; font-weight: 800; color: var(--accent);">🚀 EM CRESCIMENTO</span>
+          <span style="font-size: 12px; color: var(--muted);">Retorno Previsível</span>
+        </div>
+        <p style="font-size: 15px; color: var(--white); font-style: italic; line-height: 1.5;">
+          "Eu montei minha empresa tem pouco tempo. Não tinha orçamento alto para marketing e esse valor único sem mensalidade me ajudou muito. O sistema está no ar há três semanas. No começo entraram uns curiosos, mas a gente filtrou os textos com os meninos e agora engrenou. Estou pegando de 3 a 5 ordens de serviço novas por semana direto da página. O fluxo tá constante e o dinheiro tá entrando certinho. Pelo preço cobrado, vale demais."
+        </p>
+        <div>
+          <strong style="font-size: 14px; color: var(--white); display: block;">Thiago L.</strong>
+          <span style="font-size: 13px; color: var(--muted);">Autônomo Autorizado (Central do Ar)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-dots" id="sliderDots"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section price-block fade-in">
+  <div class="container">
+    <div class="section-label">O Investimento</div>
+    <h2 class="section-title">O valor de uma instalação simples para mudar o jogo</h2>
+    <p class="section-body">Um único contrato de manutenção comercial recupera esse investimento três vezes mais rápido. Pare de queimar dinheiro esperando o telefone tocar sozinho.</p>
+
+    <div class="price-card">
+      <div class="price-badge">Sem mensalidades · Sem pegadinhas</div>
+      <div class="price-amount"><sup>R$</sup>697</div>
+      <p class="price-desc">Pagamento único no PIX ou parcelado no cartão.</p>
+
+      <ul class="price-includes">
+        <li>Estrutura Completa de Landing Page Direct Response</li>
+        <li>Entrega Expressa Máxima em até 48 Horas</li>
+        <li>Garantia de Alterações Livres por 7 Dias</li>
+        <li>Tocado por uma Equipe de 2 Especialistas Dedicados</li>
+        <li>Integração com WhatsApp e Otimização de Ficha do Google</li>
+        <li>Domínio e Hospedagem inclusos no primeiro ano.</li>
+      </ul>
+
+      <a href="https://wa.me/5598985662704?text=Quero+contratar+o+sistema+de+R%24697+para+minha+empresa+de+refrigera%C3%A7%C3%A3o." target="_blank" rel="noopener" class="btn-cta" style="border-radius: 8px;">
+        CONTRATAR AGORA E TRAVAR MINHA REGIÃO
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="cta-final fade-in">
+  <div class="container">
+    <h2>Você vai continuar assistindo seus concorrentes dominarem o mercado de São Luís?</h2>
+    <p>O calor em São Luís não para, a demanda existe. A única questão é se o dinheiro vai para o seu caixa ou para a concorrência. Clique abaixo para falar direto com o especialista e iniciar sua ativação rápida em 48h.</p>
+    <a href="https://wa.me/5598985662704?text=Quero+contratar+o+sistema+de+R%24697+para+minha+empresa+de+refrigera%C3%A7%C3%A3o." target="_blank" rel="noopener" class="btn-cta" style="font-size:18px; padding: 22px 36px;">
+      QUERO FATURAR MAIS COMPRANDO O SISTEMA
+    </a>
+    <div class="cta-note">Lembre-se: Atendemos apenas uma empresa por nicho específico/região para evitar concorrência interna. Garanta sua vaga.</div>
+  </div>
+</section>
+
+<div class="sticky-cta" id="stickyCta">
+  <a href="https://wa.me/5598985662704?text=Quero+contratar+o+sistema+de+R%24697+para+minha+empresa+de+refrigera%C3%A7%C3%A3o." target="_blank" rel="noopener" class="btn-cta">
+    ATIVAR AGORA POR R$697
+  </a>
+</div>
+
+<footer>
+  <p>Páginas de Alta Conversão para Empresas de Climatização em São Luís — MA</p>
+  <p style="margin-top:6px;">© 2026 · Foco em Resposta Direta e Tráfego Local</p>
+</footer>
+
+<script>
+  // Fade-in ao rolar a página
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Aparecer o botão fixo embaixo no mobile
+  const sticky = document.getElementById('stickyCta');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const nearEnd = document.body.scrollHeight - window.innerHeight - 250;
+    if (scrolled > 450 && scrolled < nearEnd) {
+      sticky.style.display = 'block';
+    } else {
+      sticky.style.display = 'none';
+    }
+  }, { passive: true });
+
+  // LÓGICA DO CARROSSEL DE DEPOIMENTOS
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dotsContainer = document.getElementById('sliderDots');
+  let currentSlide = 0;
+  let sliderInterval;
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('slider-dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.slider-dot');
+
+  function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    let next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function goToSlide(index) {
+    showSlide(index);
+    resetTimer();
+  }
+
+  function startTimer() {
+    sliderInterval = setInterval(nextSlide, 7000); // 7 segundos de leitura por slide
+  }
+
+  function resetTimer() {
+    clearInterval(sliderInterval);
+    startTimer();
+  }
+
+  if(slides.length > 0) {
+    startTimer();
+  }
+</script>
+</body>
+</html>
